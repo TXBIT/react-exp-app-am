@@ -10,7 +10,7 @@ import {
   setEndDate,
 } from '../actions/filters';
 
-class ExpenseListFilters extends Component {
+export class ExpenseListFilters extends Component {
   state = {
     calendarFocused: null,
   };
@@ -24,28 +24,28 @@ class ExpenseListFilters extends Component {
     this.setState(() => ({ calendarFocused }));
   };
 
+  onTextChange = (e) => {
+    this.props.setTextFilter(e.target.value);
+  };
+
+  onSortChange = (e) => {
+    if (e.target.value === 'date') {
+      this.props.sortByDate();
+    } else if (e.target.value === 'amount') {
+      this.props.sortByAmount();
+    }
+  };
+
   render() {
-    const { filters, setTextFilter, sortByDate, sortByAmount } = this.props;
+    const { filters } = this.props;
     return (
       <div>
-        <input
-          type="text"
-          value={filters.text}
-          onChange={(e) => {
-            setTextFilter(e.target.value);
-          }}
-        />
+        <input type="text" value={filters.text} onChange={this.onTextChange} />
         <select
           name=""
           id=""
           value={filters.sortBy}
-          onChange={(e) => {
-            if (e.target.value === 'date') {
-              sortByDate();
-            } else if (e.target.value === 'amount') {
-              sortByAmount();
-            }
-          }}
+          onChange={this.onSortChange}
         >
           <option value="date">Date</option>
           <option value="amount">Amount</option>
@@ -69,10 +69,12 @@ const mapStateToProps = (state) => ({
   filters: state.filters,
 });
 
-export default connect(mapStateToProps, {
-  setTextFilter,
-  sortByDate,
-  sortByAmount,
-  setStartDate,
-  setEndDate,
-})(ExpenseListFilters);
+const mapDispatchToProps = (dispatch) => ({
+  setTextFilter: (text) => dispatch(setTextFilter(text)),
+  sortByDate: () => dispatch(sortByDate()),
+  sortByAmount: () => dispatch(sortByAmount()),
+  setStartDate: (startDate) => dispatch(setStartDate(startDate)),
+  setEndDate: (endDate) => dispatch(setEndDate(endDate)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseListFilters);
