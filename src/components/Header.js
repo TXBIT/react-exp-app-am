@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 const Header = () => (
   <header>
-    <h1>Expense Manager</h1>
+    <h1>Budget Manager</h1>
     <NavLink to="/" activeClassName="is-active" exact={true}>
       Dashboard
     </NavLink>
