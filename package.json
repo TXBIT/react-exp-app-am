@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "live-server public --host=0.0.0.0 --port=4000",
     "build:dev": "webpack",
     "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server",
+    "heroku-postbuild": "yarn run build:prod",
+    "start": "node server/server.js",
+    "serve": "live-server public --host=0.0.0.0 --port=4000",
     "test": "jest --config=jest.config.json"
   },
   "repository": {
