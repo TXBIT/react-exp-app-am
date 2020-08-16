@@ -2,6 +2,11 @@
   "name": "expense-manager",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "8.17.0",
+    "npm": "6.13.4",
+    "yarn": "1.22.4"
+  },
   "main": "index.js",
   "scripts": {
     "build:dev": "webpack",
