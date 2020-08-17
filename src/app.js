@@ -9,6 +9,7 @@ import configureStore from './store/configureStore';
 import AppRouter, { history } from './routers/AppRouter';
 import { firebase } from './firebase/firebase';
 import { startSetExpenses } from './actions/expenses';
+import { login, logout } from './actions/auth';
 
 const store = configureStore();
 
@@ -29,6 +30,7 @@ ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
+    store.dispatch(login(user.uid));
     store.dispatch(startSetExpenses()).then(() => {
       renderApp();
       if (history.location.pathname === '/') {
@@ -36,6 +38,7 @@ firebase.auth().onAuthStateChanged((user) => {
       }
     });
   } else {
+    store.dispatch(logout());
     renderApp();
     history.push('/');
   }
